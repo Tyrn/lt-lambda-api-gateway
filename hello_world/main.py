@@ -10,7 +10,11 @@ def lambda_handler(event, context):
     response_message = "Hello from Lambda!"
 
     if event["queryStringParameters"] and event["queryStringParameters"]["Name"]:
-        response_message = "Hello, " + event["queryStringParameters"]["Name"] + "!"
+        response_message = (
+            event
+            if event["queryStringParameters"]["Name"] == "DumpEvent"
+            else "Hello, " + event["queryStringParameters"]["Name"] + "!"
+        )
 
     return {
         "statusCode": 200,
